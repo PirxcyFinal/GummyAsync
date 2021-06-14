@@ -22,7 +22,7 @@ License: Apache 2.0
 """
 
 """
-Credit Oli, Terbau and GummyBear
+Credit Oli, Terbau and Pirxcy
 """
 
 from typing import Tuple, Union, Any
@@ -57,7 +57,7 @@ class InvalidParameters(GummyFNAsyncException):
 class NotFound(GummyFNAsyncException):
     pass
 
-class BRCosmetic:
+class cosmetic_result:
     def __init__(self, data: dict) -> None:
         self.data = data
         self.id = data['info']['id']
@@ -65,7 +65,17 @@ class BRCosmetic:
         self.name = data['info']['name']
         self.description = data['info']['description']
 
-
+        
+class stat_result:
+    def __init__(self, data: dict) -> None:
+        self.data = data
+        self.id = data['account']['id']
+        self.images = data['image']
+        self.name = data['account']['name']
+        self.overallstats = data['overallstats']
+        
+            
+            
 async def get_cosmetic(**params: Any):
     async with aiohttp.ClientSession() as session:
         async with session.request(method='GET', url=f'{GUMMYFN_BASE}/cosmetic', params=params) as r:
@@ -77,4 +87,17 @@ async def get_cosmetic(**params: Any):
             if 'Could not find any cosmetic matching parameters' in str(data):
                 raise NotFound('Could not find any cosmetic matching parameters.')
 
-            return BRCosmetic(data)
+            return result(data)
+
+async def geet_stats(**params: Any):
+    async with aiohttp.ClientSession() as session:
+        async with session.request(method='GET', url=f'{GUMMYFN_BASE}/stats', params=params) as r:
+            data = await r.json()
+
+            if 'missing name and id parameter' in str(data):
+                raise InvalidParameters('Please Use Valid Parameters')
+
+            if 'Could not find any cosmetic matching parameters' in str(data):
+                raise NotFound('Could not find any cosmetic matching parameters.')
+
+            return stat_result(data)        
