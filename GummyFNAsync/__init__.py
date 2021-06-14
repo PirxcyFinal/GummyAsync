@@ -49,6 +49,16 @@ GUMMYFN_BASE = 'https://api.gummyfn.com'
 #Original Link: https://github.com/xMistt/BenBotAsync
 
 
+class GummyFNAsyncException(Exception):
+    pass
+
+
+class InvalidParameters(GummyFNAsyncException):
+    pass
+
+
+class NotFound(GummyFNAsyncException):
+    pass
 
 class BRCosmetic:
     def __init__(self, data: dict) -> None:
