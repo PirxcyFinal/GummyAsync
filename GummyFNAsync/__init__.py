@@ -68,11 +68,9 @@ class cosmetic_result:
 class cc_result:
     def __init__(self, data: dict) -> None:
         self.data = data
-        self.code = data['code']
         self.account = data['account']
         self.account.name = data['account']['name']
         self.account.id = data['account']['id']
-        self.name = data['code']
         self.status = data['info']['status']
         self.info = data['info']
             
