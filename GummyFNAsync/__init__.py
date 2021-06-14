@@ -26,7 +26,7 @@ Credit Oli, Terbau and GummyBear
 """
 
 from typing import Tuple, Union, Any
-
+from enum import Enum
 from .enums import *
 from .cosmetics import BRCosmetic
 from .exceptions import InvalidParameters, NotFound
