@@ -104,7 +104,7 @@ async def get_creator_code(**params: Any):
         async with session.request(method='GET', url=f'{GUMMYFN_BASE}/creatorcode', params=params) as r:
             data = await r.json()
 
-            if 'paramet er' in str(data):
+            if 'parameter' in str(data):
                 raise InvalidParameters('Please Use Valid Parameters')
 
             if 'unable to find' in str(data):
