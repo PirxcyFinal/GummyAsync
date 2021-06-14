@@ -27,8 +27,6 @@ Credit Oli, Terbau and GummyBear
 
 from typing import Tuple, Union, Any
 from enum import Enum
-from .cosmetics import BRCosmetic
-from .exceptions import InvalidParameters, NotFound
 
 import aiohttp
 import base64
