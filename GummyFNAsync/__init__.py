@@ -97,7 +97,7 @@ async def get_cosmetic(**params: Any):
             if 'Could not find any cosmetic matching parameters' in str(data):
                 raise NotFound('Could not find any cosmetic matching parameters.')
 
-            return result(data)
+            return cosmetic_result(data)
 
 async def get_creator_code(**params: Any):
     async with aiohttp.ClientSession() as session:
