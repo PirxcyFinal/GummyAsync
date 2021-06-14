@@ -50,7 +50,13 @@ GUMMYFN_BASE = 'https://api.gummyfn.com'
 
 
 
-# Credit to Terbau for this function.
+class BRCosmetic:
+    def __init__(self, data: dict) -> None:
+        self.data = data
+        self.id = data['info']['id']
+        self.images = data['images']
+        self.name = data['info']['name']
+        self.description = data['info']['description']
 
 
 async def get_cosmetic(**params: Any):
