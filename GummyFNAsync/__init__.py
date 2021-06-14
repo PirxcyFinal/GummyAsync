@@ -34,14 +34,13 @@ from .exceptions import InvalidParameters, NotFound
 import aiohttp
 import base64
 import codecs
-import fortnitepy
 import traceback
 import functools
 import asyncio
 import json
 
 __name__ = 'GummyFNAsync'
-__version__ = '1.0.0'
+__version__ = '0.0.1'
 __author__ = 'Pirxcy'
 
 GUMMYFN_BASE = 'https://api.gummyfn.com'
@@ -52,17 +51,12 @@ GUMMYFN_BASE = 'https://api.gummyfn.com'
 
 
 # Credit to Terbau for this function.
-async def json_or_text(response: aiohttp.ClientResponse) -> Union[str, dict]:
-    text = await response.text(encoding='utf-8')
-    if 'application/json' in response.headers.get('content-type', ''):
-        return json.loads(text)
-    return text
 
 
 async def get_cosmetic(**params: Any):
     async with aiohttp.ClientSession() as session:
         async with session.request(method='GET', url=f'{GUMMYFN_BASE}/cosmetic', params=params) as r:
-            data = await json_or_text(r)
+            data = await r.json()
 
             if 'missing name and id parameter' in str(data):
                 raise InvalidParameters('Please Use Valid Parameters')
