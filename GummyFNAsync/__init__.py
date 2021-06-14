@@ -71,7 +71,7 @@ class cc_result:
         self.account = data['account']
         self.account_name = data['account']['name']
         self.account_id = data['account']['id']
-        self.status = data['info']['status']
+        self.status = data["info"]['status']
         self.info = data['info']
             
 class stat_result:
