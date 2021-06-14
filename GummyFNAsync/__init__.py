@@ -65,7 +65,17 @@ class cosmetic_result:
         self.name = data['info']['name']
         self.description = data['info']['description']
 
-        
+class cc_result:
+    def __init__(self, data: dict) -> None:
+        self.data = data
+        self.code = data['code']['code']
+        self.account = data['account']
+        self.account.name = data['account']['name']
+        self.account.id = data['account']['id']
+        self.name = data['code']['code']
+        self.status = data['info']['status']
+        self.info = data['info']
+            
 class stat_result:
     def __init__(self, data: dict) -> None:
         self.data = data
@@ -89,15 +99,28 @@ async def get_cosmetic(**params: Any):
 
             return result(data)
 
-async def geet_stats(**params: Any):
+async def get_creator_code(**params: Any):
+    async with aiohttp.ClientSession() as session:
+        async with session.request(method='GET', url=f'{GUMMYFN_BASE}/creatorcode', params=params) as r:
+            data = await r.json()
+
+            if 'paramet er' in str(data):
+                raise InvalidParameters('Please Use Valid Parameters')
+
+            if 'unable to find' in str(data):
+                raise NotFound('Could not find any cosmetic matching parameters.')
+
+            return cc_result(data)         
+        
+async def get_stats(**params: Any):
     async with aiohttp.ClientSession() as session:
         async with session.request(method='GET', url=f'{GUMMYFN_BASE}/stats', params=params) as r:
             data = await r.json()
 
-            if 'missing name and id parameter' in str(data):
+            if 'parameter' in str(data):
                 raise InvalidParameters('Please Use Valid Parameters')
 
-            if 'Could not find any cosmetic matching parameters' in str(data):
-                raise NotFound('Could not find any cosmetic matching parameters.')
+            if 'the requested account does not exist' in str(data):
+                raise NotFound('The Requested Account Does not Exist')
 
-            return stat_result(data)        
+            return cc_result(data)        
